@@ -5,10 +5,12 @@ const getRandomInteger = (min, max) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 };
+
 getRandomInteger();
 
 const getRandomFloat = (min, max, quantity = 5) =>
   (min + Math.random() * (max - min)).toFixed(quantity);
+
 getRandomFloat();
 
 const author = {
@@ -59,7 +61,7 @@ const getRandomElement = (elements) => elements[getRandomInteger(0, elements.len
 const createOffer = () => ({
   author: author.avatar,
   title: offer.title,
-  addres: offer.address,
+  address: offer.address,
   price: offer.price,
   type: getRandomElement(offer.type),
   rooms: offer.rooms,
@@ -71,6 +73,8 @@ const createOffer = () => ({
   photos: getRandomElement(offer.photos),
 });
 
-const similarOffers = Array.from({length: EMOUNT_OFFERS}, createOffer);
+const arrayFromOffer = [];
 
-similarOffers();
+Object.entries(createOffer()).forEach(([key, value]) => {
+  arrayFromOffer.push(`${key  }: ${  value}`);
+});
