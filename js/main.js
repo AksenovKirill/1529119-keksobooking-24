@@ -1,3 +1,5 @@
+const OFFERS_EMOUNT = 10;
+
 const getRandomInteger = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -11,11 +13,8 @@ const getRandomFloat = (min, max, quantity = 5) =>
 
 getRandomFloat();
 
-const author = {
-  avatar: `img/avatars/user${`0${getRandomInteger(0, 10)}`}.png`,
-};
-
 const offer = {
+  avatar: `img/avatars/user${`0${getRandomInteger(0, 10)}`}.png`,
   title: 'Предложение',
   address: `${getRandomFloat(35.6500, 35.7000)}, ${getRandomFloat(139.7000, 139.80000)}`,
   price: getRandomInteger(0, 1000),
@@ -57,7 +56,7 @@ const offer = {
 const getRandomElement = (elements) => elements[getRandomInteger(0, elements.length -1)];
 
 const createOffer = () => ({
-  author: author.avatar,
+  author: offer.avatar,
   title: offer.title,
   address: offer.address,
   price: offer.price,
@@ -71,8 +70,4 @@ const createOffer = () => ({
   photos: getRandomElement(offer.photos),
 });
 
-const arrayFromOffer = [];
-
-Object.entries(createOffer()).forEach(([key, value]) => {
-  arrayFromOffer.push(`${key  }: ${  value}`);
-});
+const arrayOffers = Array.from({length: OFFERS_EMOUNT}, createOffer);
