@@ -5,7 +5,7 @@ const OFFERS_AMOUNT = 10;
 const offer = {
   avatar: `img/avatars/user${`0${getRandomInteger(0, 10)}`}.png`,
   title: 'Предложение',
-  address: `${getRandomFloat(35.6500, 35.7000)}, ${getRandomFloat(139.7000, 139.80000)}`,
+  address: `${(35.6500, 35.7000)}, ${(139.7000, 139.80000)}`,
   price: getRandomInteger(0, 1000),
   type: [
     'palace',
@@ -43,13 +43,13 @@ const offer = {
 };
 
 const createOffer = () => ({
-  author: offer.avatar,
+  author: `img/avatars/user${`0${getRandomInteger(0, 10)}`}.png`,
   title: offer.title,
-  address: offer.address,
-  price: offer.price,
+  address: `${getRandomFloat(35.6500, 35.7000)}, ${getRandomFloat(139.7000, 139.80000)}`,
+  price: getRandomInteger(0, 1000),
   type: getRandomElement(offer.type),
-  rooms: offer.rooms,
-  guest: offer.guest,
+  rooms: getRandomInteger(0, 4),
+  guest: getRandomInteger(0, 10),
   checkin: getRandomElement(offer.checkin),
   checkout: getRandomElement(offer.checkout),
   features: getRandomElement(offer.features),
