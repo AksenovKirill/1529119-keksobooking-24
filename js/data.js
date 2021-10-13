@@ -7,13 +7,13 @@ const offer = {
   title: 'Предложение',
   address: `${getRandomFloat(35.6500, 35.7000)}, ${getRandomFloat(139.7000, 139.80000)}`,
   price: getRandomInteger(0, 1000),
-  type: [
-    'palace',
-    'flat',
-    'house',
-    'bungalow',
-    'hotel',
-  ],
+  type: {
+    flat: 'Квартира',
+    bungalow: 'Бунгало',
+    house: 'Дом',
+    palace: 'Дворец',
+    hotel: 'Отель',
+  },
   rooms: getRandomInteger(0, 4),
   guest: getRandomInteger(0, 10),
   checkin: [
@@ -42,12 +42,14 @@ const offer = {
   ],
 };
 
+const typeRooms = Object.values(offer.type);
+
 const createOffer = () => ({
   author: offer.avatar,
   title: offer.title,
   address: offer.address,
   price: offer.price,
-  type: getRandomElement(offer.type),
+  type: getRandomElement(typeRooms),
   rooms: offer.rooms,
   guest: offer.guest,
   checkin: getRandomElement(offer.checkin),
@@ -59,4 +61,4 @@ const createOffer = () => ({
 
 const arrayOffers = Array.from({length: OFFERS_AMOUNT}, createOffer);
 
-export {arrayOffers};
+export {offer, arrayOffers, typeRooms};

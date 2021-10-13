@@ -1,2 +1,4 @@
-import {arrayOffers} from './data.js';
-console.log(arrayOffers);
+import './data.js';
+import {createNewOffer} from './markup.js';
+createNewOffer();
+
