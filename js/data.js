@@ -1,12 +1,6 @@
-import {getRandomElement, getRandomFloat, getRandomInteger } from './util.js';
+import {getRandomElement, getRandomElementsFromArray, getRandomFloat, getRandomInteger } from './util.js';
 
-const OFFERS_AMOUNT = 10;
-
-const offer = {
-  avatar: `img/avatars/user${`0${getRandomInteger(0, 10)}`}.png`,
-  title: 'Предложение',
-  address: `${getRandomFloat(35.6500, 35.7000)}, ${getRandomFloat(139.7000, 139.80000)}`,
-  price: getRandomInteger(0, 1000),
+const offerTemplate = {
   type: {
     flat: 'Квартира',
     bungalow: 'Бунгало',
@@ -14,8 +8,6 @@ const offer = {
     palace: 'Дворец',
     hotel: 'Отель',
   },
-  rooms: getRandomInteger(0, 4),
-  guest: getRandomInteger(0, 10),
   checkin: [
     '12:00',
     '13:00',
@@ -34,7 +26,6 @@ const offer = {
     'elevator',
     'conditioner',
   ],
-  description: 'Описание помещения',
   photos: [
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
@@ -42,23 +33,21 @@ const offer = {
   ],
 };
 
-const typeRooms = Object.values(offer.type);
+const typeRooms = Object.values(offerTemplate.type);
 
 const createOffer = () => ({
-  author: offer.avatar,
-  title: offer.title,
-  address: offer.address,
-  price: offer.price,
+  author: `img/avatars/user${`0${getRandomInteger(0, 10)}`}.png`,
+  title: 'Предложение',
+  address: `${getRandomFloat(35.6500, 35.7000)}, ${getRandomFloat(139.7000, 139.80000)}`,
+  price: getRandomInteger(0, 1000),
   type: getRandomElement(typeRooms),
-  rooms: offer.rooms,
-  guest: offer.guest,
-  checkin: getRandomElement(offer.checkin),
-  checkout: getRandomElement(offer.checkout),
-  features: getRandomElement(offer.features),
-  description: offer.description,
-  photos: getRandomElement(offer.photos),
+  rooms: getRandomInteger(0, 4),
+  guest: getRandomInteger(0, 10),
+  checkin: getRandomElement(offerTemplate.checkin),
+  checkout: getRandomElement(offerTemplate.checkout),
+  features: getRandomElementsFromArray(offerTemplate.features),
+  description: 'Описание помещения',
+  photos: getRandomElementsFromArray(offerTemplate.photos),
 });
 
-const arrayOffers = Array.from({length: OFFERS_AMOUNT}, createOffer);
-
-export {offer, arrayOffers, typeRooms};
+export {createOffer};
