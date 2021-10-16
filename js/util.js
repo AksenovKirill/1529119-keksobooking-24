@@ -9,4 +9,22 @@ const getRandomFloat = (min, max, quantity = 5) =>
 
 const getRandomElement = (elements) => elements[getRandomInteger(0, elements.length -1)];
 
-export {getRandomFloat, getRandomInteger, getRandomElement};
+function getRandomElementsFromArray(array) {
+  const randomElements = getRandomInteger(1, array.length - 1);
+  const result = [];
+
+  if (randomElements === array.length - 1) {
+    return [...array];
+  }
+
+  while (result.length < randomElements) {
+    const randomElement = getRandomElement(array);
+    if (!result.includes(randomElement)) {
+      result.push(randomElement);
+    }
+  }
+
+  return result;
+}
+
+export {getRandomFloat, getRandomElementsFromArray, getRandomInteger, getRandomElement};
