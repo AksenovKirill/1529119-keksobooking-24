@@ -9,7 +9,7 @@ const getRandomFloat = (min, max, quantity = 5) =>
 
 const getRandomElement = (elements) => elements[getRandomInteger(0, elements.length -1)];
 
-function getRandomElementsFromArray(array) {
+const getRandomElementsFromArray = (array) => {
   const randomElements = getRandomInteger(1, array.length - 1);
   const result = [];
 
@@ -25,6 +25,12 @@ function getRandomElementsFromArray(array) {
   }
 
   return result;
-}
+};
 
-export {getRandomFloat, getRandomElementsFromArray, getRandomInteger, getRandomElement};
+const getArrayForCicle = (array, newArray) => {
+  array.forEach((element) => {
+    newArray.push(element);
+  });
+};
+
+export {getRandomFloat, getRandomElementsFromArray, getRandomInteger, getRandomElement, getArrayForCicle};
