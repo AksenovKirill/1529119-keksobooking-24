@@ -5,7 +5,7 @@ const map =  document.querySelector('.map__canvas');
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterElements = mapFilter.querySelectorAll('select');
 
-const getInactivateForm = () => {
+const deactivateForm = () => {
   map.style.background = MAP_COLOR;
   form.classList.add('ad-form--disabled');
   formElements.forEach((fieldset) => {
@@ -17,7 +17,7 @@ const getInactivateForm = () => {
   });
 };
 
-const getActivateForm = () => {
+const activateForm = () => {
   map.style.background = '';
   form.classList.remove('ad-form--disabled');
   formElements.forEach((fieldset) => {
@@ -29,4 +29,4 @@ const getActivateForm = () => {
   });
 };
 
-export {getInactivateForm, getActivateForm};
+export {deactivateForm, activateForm};

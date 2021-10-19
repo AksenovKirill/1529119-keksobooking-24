@@ -27,10 +27,4 @@ const getRandomElementsFromArray = (array) => {
   return result;
 };
 
-const getArrayForCicle = (array, newArray) => {
-  array.forEach((element) => {
-    newArray.push(element);
-  });
-};
-
-export {getRandomFloat, getRandomElementsFromArray, getRandomInteger, getRandomElement, getArrayForCicle};
+export {getRandomFloat, getRandomElementsFromArray, getRandomInteger, getRandomElement};

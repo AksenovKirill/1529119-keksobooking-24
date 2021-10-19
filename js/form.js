@@ -1,85 +1,35 @@
-import { getArrayForCicle } from './util.js';
-
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
-const ALERT_BORDER_COLOR = '4px solid red';
-
 const form = document.querySelector('.ad-form');
-const roomNumber = form.querySelector('#room_number');
-const roomNumberElements = roomNumber.querySelectorAll('option');
+const roomType = form.querySelector('#type');
+const priceRoom = form.querySelector('#price');
 const capacity = form.querySelector('#capacity');
-const capacityCollection = capacity.querySelectorAll('option');
-const titleElement = form.querySelector('#title');
-const roomTypeSelect = form.querySelector('#type');
-const priceForRoom = form.querySelector('#price');
-const priceOptions = roomTypeSelect.querySelectorAll('option');
+const roomNumber = form.querySelector('#room_number');
 const checkIn = form.querySelector('#timein');
-const checkInOptions = checkIn.querySelectorAll('option');
 const checkOut = form.querySelector('#timeout');
-const checkOutOptions = checkOut.querySelectorAll('option');
-const submitButton = document.querySelector('.ad-form__submit');
 
-const optionRooms = [];
-const capacityOptions = [];
-const roomNumberElementValues = [];
-const timeIn = [];
-const timeOut = [];
-const price = [0, 1000, 3000, 5000, 10000];
+const roomTypeOptions = Array.from(roomType.options);
+const capacityOptions = Array.from(capacity.options);
+const roomNumberOptions = Array.from(capacity.options);
+const checkInOptions = Array.from(checkIn.options);
+const checkOutOptions = Array.from(checkOut.options);
+const prices = [0, 1000, 3000, 5000, 10000];
 
-getArrayForCicle(capacityCollection, capacityOptions);
-getArrayForCicle(roomNumberElements, roomNumberElementValues);
-getArrayForCicle(checkInOptions, timeIn);
-getArrayForCicle(checkOutOptions, timeOut);
+const roomTypeValues = [];
+roomTypeOptions.forEach((option) => roomTypeValues.push(option.value));
 
-const getValidateTitle = () => {
-  titleElement.addEventListener('input', () => {
-    const valueLength = titleElement.value.length;
-    if (valueLength < MIN_TITLE_LENGTH) {
-      titleElement.setCustomValidity(`Ещё ${  MIN_TITLE_LENGTH - valueLength } символов`);
-    } else if (valueLength > MAX_TITLE_LENGTH) {
-      titleElement.setCustomValidity(`Удалите лишние ${  valueLength - MAX_TITLE_LENGTH } символы`);
-    } else {
-      titleElement.setCustomValidity('');
+const roomOptions  = roomTypeValues.reduce((acc, room, i) => Object.assign(acc, { [room]: prices[i] }), {});
+
+const selectRoomType = () => {
+  roomType.addEventListener('change', () => {
+    for (const item in roomOptions) {
+      if(roomType.value === item) {
+        priceRoom.value = '';
+        priceRoom.min = roomOptions[item];
+        priceRoom.placeholder = roomOptions[item];
+        priceRoom.reportValidity();
+      }
     }
-    titleElement.reportValidity();
   });
 };
-getValidateTitle();
-
-const getPriceValues = () => {
-  priceOptions.forEach((elem) => {
-    optionRooms.push(elem.value);
-  });
-};
-getPriceValues();
-
-const newPriceObject = optionRooms.reduce((acc, room, i) => Object.assign(acc, { [room]: price[i] }), {});
-
-const selectRoomTypeOption = () => {
-  roomTypeSelect.addEventListener('change', () => {
-    for (const item in newPriceObject) {
-      if(roomTypeSelect.value === item) {
-        priceForRoom.value = '';
-        priceForRoom.min = newPriceObject[item];
-        priceForRoom.placeholder = newPriceObject[item];
-        priceForRoom.reportValidity();
-      }
-      else if (priceForRoom.onclick) {
-        priceForRoom.min = newPriceObject[item];
-      }
-      priceForRoom.setCustomValidity('');
-      submitButton.addEventListener('click', () => {
-        if (roomTypeSelect.selectedIndex <= priceForRoom.min) {
-          priceForRoom.style.border = 'none';
-        }
-        else {
-          priceForRoom.style.border = '4px solid red';
-        }
-      });
-    }
-  });};
-
-selectRoomTypeOption();
 
 const disableCapacityOptions = () => {
   capacityOptions.forEach((element) => {
@@ -87,7 +37,7 @@ const disableCapacityOptions = () => {
   });
 };
 
-const choiceValidation = {
+const choiceCapacityOption = {
   oneRoom: () => {
     capacityOptions[2].disabled = false;
     capacityOptions.selected = '';
@@ -113,83 +63,58 @@ const choiceValidation = {
   },
 };
 
-const getValidateGuest = roomNumber.addEventListener('click', () => {
+roomNumber.addEventListener('click', () => {
   disableCapacityOptions();
-  if (roomNumberElementValues[0].selected) {
-    choiceValidation.oneRoom();
+  if (roomNumberOptions[0].selected) {
+    choiceCapacityOption.oneRoom();
   }
-  else if (roomNumberElementValues[1].selected) {
-    choiceValidation.twoRooms();
+  else if (roomNumberOptions[1].selected) {
+    choiceCapacityOption.twoRooms();
   }
-  else if (roomNumberElementValues[2].selected) {
-    choiceValidation.threeRooms();
+  else if (roomNumberOptions[2].selected) {
+    choiceCapacityOption.threeRooms();
   }
-  else if (roomNumberElementValues[3].selected) {
-    choiceValidation.oneHundredRooms();
+  else if (roomNumberOptions[3].selected) {
+    choiceCapacityOption.oneHundredRooms();
   }
 });
 
 const disableTimeOutOptions = () => {
-  timeOut.forEach((element) => {
+  checkOutOptions.forEach((element) => {
     element.disabled = true;
   });
 };
 
-const choiceTime = {
+const choiceTimeOption = {
   firstOption: () => {
-    timeOut[0].disabled = false;
-    timeOut[0].selected = '';
-    timeOut[0].selected = true;
+    checkOutOptions[0].disabled = false;
+    checkOutOptions[0].selected = '';
+    checkOutOptions[0].selected = true;
   },
   secondOption: () => {
-    timeOut[1].disabled = false;
-    timeOut[1].selected = '';
-    timeOut[1].selected = true;
+    checkOutOptions[1].disabled = false;
+    checkOutOptions[1].selected = '';
+    checkOutOptions[1].selected = true;
   },
   thirdOption: () => {
-    timeOut[2].disabled = false;
-    timeOut[2].selected = '';
-    timeOut[2].selected = true;
+    checkOutOptions[2].disabled = false;
+    checkOutOptions[2].selected = '';
+    checkOutOptions[2].selected = true;
   },
 };
 
-const getChoiceTime = checkIn.addEventListener('click', () => {
+checkIn.addEventListener('click', () => {
   disableTimeOutOptions();
-  if(timeIn[0].selected) {
-    choiceTime.firstOption();
+  if(checkInOptions[0].selected) {
+    choiceTimeOption.firstOption();
   }
-  else if (timeIn[1].selected) {
-    choiceTime.secondOption();
+  else if (checkInOptions[1].selected) {
+    choiceTimeOption.secondOption();
   }
-  else if (timeIn[2].selected) {
-    choiceTime.thirdOption();
+  else if (checkInOptions[2].selected) {
+    choiceTimeOption.thirdOption();
   }
 });
 
 
-const showInvalidTitle = () => {
-  submitButton.addEventListener('click', () => {
-    if (titleElement.value.length < MIN_TITLE_LENGTH || titleElement.value.length > MAX_TITLE_LENGTH) {
-      titleElement.style.border = ALERT_BORDER_COLOR;
-    }
-    else {
-      titleElement.style.border = 'none';
-    }
-  });
-};
-showInvalidTitle();
-
-const showInvalidPrice = () => {
-  submitButton.addEventListener('click', () => {
-    for (const item in newPriceObject) {
-      if (newPriceObject[item] <= priceForRoom.min) {
-        priceForRoom.style.border = 'none';
-      }
-      else {
-        priceForRoom.style.border = ALERT_BORDER_COLOR;
-      }
-    }
-  });
-};
-showInvalidPrice();
-export {getValidateTitle, getValidateGuest, getChoiceTime};
+export {selectRoomType, form, roomOptions, priceRoom};
