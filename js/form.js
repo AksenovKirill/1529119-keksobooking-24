@@ -59,6 +59,10 @@ window.addEventListener('load', () => {
   priceRoom.min = 1000;
 });
 
+priceRoom.addEventListener('keyup', function(){
+  this.value = this.value.replace(/[^\d]/g, '');
+});
+
 roomNumber.addEventListener('change', () => {
   if (roomNumberOptions[0].selected) {
     createCapacityFragment();
