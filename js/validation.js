@@ -30,9 +30,9 @@ const initValidation = () => {
   });
 
   submitButton.addEventListener('click', () => {
-    for (const name in roomTypeValues) {
-      for (const price in roomTypeValues[name]) {
-        if (roomTypeValues[name][price] <= priceRoom.min) {
+    for (const item in roomTypeValues) {
+      for (const value in roomTypeValues[item]) {
+        if (roomTypeValues[item][value] <= priceRoom.min) {
           priceRoom.style.border = 'none';
         }
         else {

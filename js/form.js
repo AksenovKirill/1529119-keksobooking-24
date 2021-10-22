@@ -25,12 +25,12 @@ const createCapacityFragment = () => {
 
 const initForm = () => {
   roomType.addEventListener('change', () => {
-    for (const name in roomTypeValues) {
-      for (const price in roomTypeValues[name]) {
-        if(roomType.value === price) {
+    for (const item in roomTypeValues) {
+      for (const value in roomTypeValues[item]) {
+        if(roomType.value === value) {
           priceRoom.value = '';
-          priceRoom.min = roomTypeValues[name][price];
-          priceRoom.placeholder = roomTypeValues[name][price];
+          priceRoom.min = roomTypeValues[item][value];
+          priceRoom.placeholder = roomTypeValues[item][value];
           priceRoom.reportValidity();
         }
       }
