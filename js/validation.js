@@ -27,18 +27,13 @@ const initValidation = () => {
     else {
       titleElement.style.border = 'none';
     }
-  });
-
-  submitButton.addEventListener('click', () => {
-    for (const item in roomTypeValues) {
-      for (const value in roomTypeValues[item]) {
-        if (roomTypeValues[item][value] <= priceRoom.min) {
-          priceRoom.style.border = 'none';
-        }
-        else {
-          priceRoom.style.border = ALERT_BORDER_COLOR;
-        }
+    for (const item of roomTypeValues) {
+      if (item.price <= priceRoom.min) {
+        priceRoom.style.border = 'none';
       }
-    }});
-};
+      else {
+        priceRoom.style.border = ALERT_BORDER_COLOR;
+      }
+    }
+  });};
 export {initValidation};

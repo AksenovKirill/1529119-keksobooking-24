@@ -1,8 +1,7 @@
 import {createOffer} from './data.js';
 import {createOfferElement} from './markup.js';
-import { deactivateForm, activateForm } from './statepage.js';
 import {initValidation } from './validation.js';
-import {initForm} from './form.js';
+import {initForm, deactivateForm, activateForm} from './form.js';
 
 // eslint-disable-next-line no-console
 console.log(deactivateForm);
