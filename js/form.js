@@ -1,6 +1,7 @@
 const MAP_COLOR = 'grey';
 
 const form = document.querySelector('.ad-form');
+const inputForAddress = form.querySelector('#address');
 const roomType = form.querySelector('#type');
 const priceRoom = form.querySelector('#price');
 const capacity = form.querySelector('#capacity');
@@ -107,4 +108,4 @@ const activateForm = () => {
   });
 };
 
-export {initForm, form, priceRoom, roomTypeValues, deactivateForm, activateForm};
+export {initForm, form, priceRoom, roomTypeValues, deactivateForm, activateForm, inputForAddress};

@@ -36,9 +36,12 @@ const offerTemplate = {
 const typeRooms = Object.values(offerTemplate.type);
 
 const createOffer = () => ({
-  author: `img/avatars/user${`0${getRandomInteger(0, 10)}`}.png`,
+  author: `img/avatars/user0${getRandomInteger(1, 9)}.png`,
   title: 'Предложение',
-  address: `${getRandomFloat(35.6500, 35.7000)}, ${getRandomFloat(139.7000, 139.80000)}`,
+  address: {
+    lat: getRandomFloat(35.65000, 35.70000),
+    lng: getRandomFloat(139.70000, 139.80000),
+  },
   price: getRandomInteger(0, 1000),
   type: getRandomElement(typeRooms),
   rooms: getRandomInteger(0, 4),
