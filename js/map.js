@@ -1,6 +1,6 @@
 import { inputForAddress } from './form.js';
 import {createOfferElement} from './markUp.js';
-import {offers} from './main.js';
+
 const ZOOM_LEVEL = 12;
 
 let mapContainer, markerGroup;
@@ -24,7 +24,7 @@ const mainMarker = L.marker(
   },
 );
 
-const createMap = (mapLoad) => {
+const createMap = (mapLoad, offers) => {
   mapContainer = L.map('map-canvas')
     .on('load', mapLoad)
     .setView(tokyoCoordinates, ZOOM_LEVEL);
@@ -44,7 +44,7 @@ const createMap = (mapLoad) => {
 
   markerGroup = L.layerGroup().addTo(mapContainer);
 
-  offers.forEach(({address}) => {
+  offers.forEach((offer) => {
     const otherIcons = L.icon({
       iconUrl: 'img/pin.svg',
       iconSize: [40, 40],
@@ -53,15 +53,15 @@ const createMap = (mapLoad) => {
 
     const otherMarkers = L.marker(
       {
-        lat: address.lat,
-        lng: address.lng,
+        lat: offer.address.lat,
+        lng: offer.address.lng,
       },
       {
         otherIcons,
       },
     );
     otherMarkers.addTo(markerGroup)
-      .bindPopup(() => createOfferElement(offers),
+      .bindPopup(((createOfferElement(offer))),
         { keepInView: true },
       );
   });
@@ -73,4 +73,4 @@ const setMarkers = () => {
   mapContainer.setView(tokyoCoordinates, ZOOM_LEVEL);
 };
 
-export {createMap, setMarkers /* createMarker, */ /* createMarkers */};
+export {createMap, setMarkers};

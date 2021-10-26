@@ -1,7 +1,5 @@
-import { createOffer } from './data.js';
-
-const PHOTO_WIDTH = 40;
-const PHOTO_HEIGHT = 45;
+const PHOTO_WIDTH = 80;
+const PHOTO_HEIGHT = 85;
 
 const offerTemplate = document.querySelector('#card')
   .content
@@ -9,7 +7,6 @@ const offerTemplate = document.querySelector('#card')
 
 const createOfferElement = (offer) => {
   const offerElement = offerTemplate.cloneNode(true);
-  offerElement.querySelector('.popup__avatar').src = offer.avatar;
   offerElement.querySelector('.popup__title').textContent = offer.title;
   offerElement.querySelector('.popup__text--address').textContent = offer.address;
   offerElement.querySelector('.popup__text--price').textContent = `${offer.price}${'₽/ночь'}`;
@@ -17,10 +14,11 @@ const createOfferElement = (offer) => {
   offerElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guest} гостей`;
   offerElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   offerElement.querySelector('.popup__description').textContent = offer.description;
+  offerElement.querySelector('.popup__avatar').src = offer.author;
 
   const featuresList = offerElement.querySelector('.popup__features');
   featuresList.innerHTML = '';
-  if(offer.features) {
+  if (offer.features) {
     offer.features.forEach((feature) => {
       const featureElement = document.createElement('li');
       featureElement.classList.add('popup__feature');
@@ -43,6 +41,5 @@ const createOfferElement = (offer) => {
   }
   return offerElement;
 };
-createOffer();
 
 export {createOfferElement};
