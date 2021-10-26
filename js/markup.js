@@ -8,7 +8,7 @@ const offerTemplate = document.querySelector('#card')
 const createOfferElement = (offer) => {
   const offerElement = offerTemplate.cloneNode(true);
   offerElement.querySelector('.popup__title').textContent = offer.title;
-  offerElement.querySelector('.popup__text--address').textContent = offer.address;
+  offerElement.querySelector('.popup__text--address').textContent = `${offer.address.lat} ${offer.address.lng}`;
   offerElement.querySelector('.popup__text--price').textContent = `${offer.price}${'₽/ночь'}`;
   offerElement.querySelector('.popup__type').textContent = offer.type;
   offerElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guest} гостей`;
