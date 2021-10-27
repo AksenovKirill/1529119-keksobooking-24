@@ -1,19 +1,14 @@
-import {createOffer} from './data.js';
-import {createOfferElement} from './markup.js';
-import { deactivateForm, activateForm } from './statepage.js';
 import {initValidation } from './validation.js';
-import {initForm} from './form.js';
-
-// eslint-disable-next-line no-console
-console.log(deactivateForm);
+import {initForm, activateForm, deactivateForm} from './form.js';
+import { createMap} from './map.js';
+import {createOffer} from './data.js';
 
 const OFFERS_AMOUNT = 10;
 const offers = Array.from({length: OFFERS_AMOUNT}, createOffer);
 
-// eslint-disable-next-line no-console
-console.log(activateForm);
+deactivateForm();
 
-offers.forEach(createOfferElement);
+createMap(activateForm, offers);
 
 initForm();
 initValidation();

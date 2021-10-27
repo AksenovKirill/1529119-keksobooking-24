@@ -1,9 +1,5 @@
-import { getRandomElement } from './util.js';
-
-const PHOTO_WIDTH = 40;
-const PHOTO_HEIGHT = 45;
-
-const offerCanvas = document.querySelector('#map-canvas');
+const PHOTO_WIDTH = 80;
+const PHOTO_HEIGHT = 85;
 
 const offerTemplate = document.querySelector('#card')
   .content
@@ -12,35 +8,38 @@ const offerTemplate = document.querySelector('#card')
 const createOfferElement = (offer) => {
   const offerElement = offerTemplate.cloneNode(true);
   offerElement.querySelector('.popup__title').textContent = offer.title;
-  offerElement.querySelector('.popup__text--address').textContent = offer.address;
+  offerElement.querySelector('.popup__text--address').textContent = `${offer.address.lat} ${offer.address.lng}`;
   offerElement.querySelector('.popup__text--price').textContent = `${offer.price}${'₽/ночь'}`;
   offerElement.querySelector('.popup__type').textContent = offer.type;
   offerElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guest} гостей`;
-  offerElement.querySelector('.popup__text--time').textContent = `Заезд после ${getRandomElement(offer.checkin)}, выезд до ${getRandomElement(offer.checkout)}`;
+  offerElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   offerElement.querySelector('.popup__description').textContent = offer.description;
+  offerElement.querySelector('.popup__avatar').src = offer.author;
 
   const featuresList = offerElement.querySelector('.popup__features');
   featuresList.innerHTML = '';
-  offer.features.forEach((feature) => {
-    const featureElement = document.createElement('li');
-    featureElement.classList.add('popup__feature');
-    featureElement.classList.add(`popup__feature--${feature}`);
-    featuresList.appendChild(featureElement);
-  });
+  if (offer.features) {
+    offer.features.forEach((feature) => {
+      const featureElement = document.createElement('li');
+      featureElement.classList.add('popup__feature');
+      featureElement.classList.add(`popup__feature--${feature}`);
+      featuresList.appendChild(featureElement);
+    });
+  }
 
   const featuresPhotos = offerElement.querySelector('.popup__photos');
   featuresPhotos.innerHTML = '';
-
-  offer.photos.forEach((photo) => {
-    const photoElement = document.createElement('img');
-    photoElement.classList.add('popup__photo');
-    photoElement.src = photo;
-    photoElement.width = PHOTO_WIDTH;
-    photoElement.height = PHOTO_HEIGHT;
-    featuresPhotos.appendChild(photoElement);
-  });
-
-  offerCanvas.appendChild(offerElement);
+  if (offer.photos) {
+    offer.photos.forEach((photo) => {
+      const photoElement = document.createElement('img');
+      photoElement.classList.add('popup__photo');
+      photoElement.src = photo;
+      photoElement.width = PHOTO_WIDTH;
+      photoElement.height = PHOTO_HEIGHT;
+      featuresPhotos.appendChild(photoElement);
+    });
+  }
+  return offerElement;
 };
 
 export {createOfferElement};
