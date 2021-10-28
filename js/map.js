@@ -24,7 +24,13 @@ const mainMarker = L.marker(
   },
 );
 
-const createMap = (mapLoad, offers) => {
+const otherIcons = L.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+const createMap = (mapLoad) => {
   mapContainer = L.map('map-canvas')
     .on('load', mapLoad)
     .setView(tokyoCoordinates, ZOOM_LEVEL);
@@ -43,18 +49,14 @@ const createMap = (mapLoad, offers) => {
     });
 
   markerGroup = L.layerGroup().addTo(mapContainer);
+};
 
+const createMarkers = (offers) => {
   offers.forEach((offer) => {
-    const otherIcons = L.icon({
-      iconUrl: 'img/pin.svg',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-    });
-
     const otherMarkers = L.marker(
       {
-        lat: offer.address.lat,
-        lng: offer.address.lng,
+        lat: offer.location.lat,
+        lng: offer.location.lng,
       },
       {
         otherIcons,
@@ -67,10 +69,9 @@ const createMap = (mapLoad, offers) => {
   });
 };
 
-//перенос метки и масштаба при отчистке формы
 const setMarkers = () => {
   mainMarker.setLatLng(tokyoCoordinates);
   mapContainer.setView(tokyoCoordinates, ZOOM_LEVEL);
 };
 
-export {createMap, setMarkers};
+export {createMap, createMarkers, setMarkers, tokyoCoordinates};

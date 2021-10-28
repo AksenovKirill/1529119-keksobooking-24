@@ -5,16 +5,16 @@ const offerTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const createOfferElement = (offer) => {
+const createOfferElement = ({author, offer}) => {
   const offerElement = offerTemplate.cloneNode(true);
   offerElement.querySelector('.popup__title').textContent = offer.title;
-  offerElement.querySelector('.popup__text--address').textContent = `${offer.address.lat} ${offer.address.lng}`;
+  offerElement.querySelector('.popup__text--address').textContent = offer.address;
   offerElement.querySelector('.popup__text--price').textContent = `${offer.price}${'₽/ночь'}`;
   offerElement.querySelector('.popup__type').textContent = offer.type;
   offerElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guest} гостей`;
   offerElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   offerElement.querySelector('.popup__description').textContent = offer.description;
-  offerElement.querySelector('.popup__avatar').src = offer.author;
+  offerElement.querySelector('.popup__avatar').src = author.avatar;
 
   const featuresList = offerElement.querySelector('.popup__features');
   featuresList.innerHTML = '';

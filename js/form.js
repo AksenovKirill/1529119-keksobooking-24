@@ -1,3 +1,8 @@
+import { DATA_OFFERS_COUNT, sendData } from './server.js';
+import { showErrorMessage } from './preventions.js';
+import {tokyoCoordinates, setMarkers, createMarkers} from './map.js';
+import { offers } from './main.js';
+
 const MAP_COLOR = 'grey';
 
 const form = document.querySelector('.ad-form');
@@ -16,6 +21,10 @@ const formElements = form.querySelectorAll('fieldset');
 const map =  document.querySelector('.map__canvas');
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterElements = mapFilter.querySelectorAll('select');
+const titleElement = form.querySelector('#title');
+const resetButton = document.querySelector('.ad-form__reset');
+const featuresElements = document.querySelectorAll('.features__checkbox');
+
 const prices = [0, 1000, 3000, 5000, 10000];
 const roomTypeValues = [];
 
@@ -108,4 +117,54 @@ const activateForm = () => {
   });
 };
 
-export {initForm, form, priceRoom, roomTypeValues, deactivateForm, activateForm, inputForAddress};
+const clearAllForm = () => {
+  mapFilter.reset();
+  form.reset();
+  featuresElements.forEach((element) => {
+    element.checked = false;
+  });
+  titleElement.style.border = 'none';
+  priceRoom.style.border = 'none';
+  priceRoom.value = '';
+};
+
+const formSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      onSuccess,
+      () => {
+        showErrorMessage();
+      },
+      new FormData(form));
+    form.reset();
+    inputForAddress.value = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
+  });
+};
+
+const resetForm = () => {
+  resetButton.addEventListener('click', () => {
+    clearAllForm();
+    setMarkers();
+    const newOffers = offers.slice(0, DATA_OFFERS_COUNT);
+    createMarkers(newOffers);
+    inputForAddress.value = '';
+    inputForAddress.placeholder = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
+    inputForAddress.value = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
+    priceRoom.placeholder = 1000;
+    priceRoom.min = 1000;
+  });
+};
+
+export {
+  initForm,
+  formSubmit,
+  form,
+  priceRoom,
+  resetForm,
+  roomTypeValues,
+  deactivateForm,
+  activateForm,
+  inputForAddress,
+  clearAllForm
+};

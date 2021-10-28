@@ -36,4 +36,5 @@ const initValidation = () => {
       }
     }
   });};
+
 export {initValidation};
