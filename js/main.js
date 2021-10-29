@@ -25,4 +25,5 @@ initValidation();
 formSubmit(() => {
   showSuccessMessage();
   clearPageElements();
+  resetAllPage();
 });
