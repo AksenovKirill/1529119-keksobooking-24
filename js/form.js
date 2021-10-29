@@ -132,19 +132,17 @@ const clearPageElements = () => {
   priceRoom.min = '';
   priceRoom.placeholder = 1000;
   priceRoom.min = 1000;
+  inputForAddress.value = coordinates;
 };
 
 const formSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    clearPageElements();
     sendData(
-      onSuccess,
-      () => {
-        showErrorMessage();
-      },
-      new FormData(form));
-    inputForAddress.value = coordinates;
+      () => onSuccess(),
+      () => showErrorMessage(),
+      new FormData(evt.target));
+    clearPageElements();
   });
 };
 
