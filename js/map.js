@@ -74,4 +74,4 @@ const setMarkers = () => {
   mapContainer.setView(tokyoCoordinates, ZOOM_LEVEL);
 };
 
-export {createMap, createMarkers, setMarkers, tokyoCoordinates};
+export {createMap, createMarkers, setMarkers, tokyoCoordinates, mainMarker, mapContainer};

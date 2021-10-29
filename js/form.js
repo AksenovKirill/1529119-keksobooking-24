@@ -1,33 +1,32 @@
 import { DATA_OFFERS_COUNT, sendData } from './server.js';
 import { showErrorMessage } from './preventions.js';
-import {tokyoCoordinates, setMarkers, createMarkers} from './map.js';
-import { offers } from './main.js';
+import {tokyoCoordinates, setMarkers, createMarkers, mapContainer} from './map.js';
 
 const MAP_COLOR = 'grey';
 
 const form = document.querySelector('.ad-form');
-const inputForAddress = form.querySelector('#address');
-const roomType = form.querySelector('#type');
-const priceRoom = form.querySelector('#price');
-const capacity = form.querySelector('#capacity');
-const roomNumber = form.querySelector('#room_number');
-const checkIn = form.querySelector('#timein');
-const checkOut = form.querySelector('#timeout');
-const capacityFragment = document.createDocumentFragment();
-const roomTypeOptions = Array.from(roomType.options);
-const roomNumberOptions = Array.from(roomNumber.options);
-const capacityOptions = Array.from(capacity.options);
 const formElements = form.querySelectorAll('fieldset');
 const map =  document.querySelector('.map__canvas');
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterElements = mapFilter.querySelectorAll('select');
+const inputForAddress = form.querySelector('#address');
+const capacity = form.querySelector('#capacity');
+const roomType = form.querySelector('#type');
+const checkIn = form.querySelector('#timein');
+const checkOut = form.querySelector('#timeout');
 const titleElement = form.querySelector('#title');
+const priceRoom = form.querySelector('#price');
+const roomNumber = form.querySelector('#room_number');
+const capacityFragment = document.createDocumentFragment();
+const roomTypeOptions = Array.from(roomType.options);
+const roomNumberOptions = Array.from(roomNumber.options);
+const capacityOptions = Array.from(capacity.options);
 const resetButton = document.querySelector('.ad-form__reset');
 const featuresElements = document.querySelectorAll('.features__checkbox');
 
 const prices = [0, 1000, 3000, 5000, 10000];
 const roomTypeValues = [];
-
+const coordinates = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
 const resetCapacity = () => {
   const capacitySelect = document.createElement('select');
   capacitySelect.classList.add('#capacity');
@@ -117,12 +116,15 @@ const activateForm = () => {
   });
 };
 
-const clearAllForm = () => {
+const clearPageElements = () => {
   mapFilter.reset();
   form.reset();
   featuresElements.forEach((element) => {
     element.checked = false;
   });
+  roomNumberOptions[0].selected;
+  resetCapacity();
+  capacity.appendChild(capacityOptions[2]);
   titleElement.style.border = 'none';
   priceRoom.style.border = 'none';
   priceRoom.value = '';
@@ -131,26 +133,25 @@ const clearAllForm = () => {
 const formSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
+    evt.target.reset();
     sendData(
       onSuccess,
       () => {
         showErrorMessage();
       },
       new FormData(form));
-    form.reset();
-    inputForAddress.value = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
+    inputForAddress.value = coordinates;
   });
 };
 
-const resetForm = () => {
+const resetAllPage = (offers) => {
   resetButton.addEventListener('click', () => {
-    clearAllForm();
+    clearPageElements();
     setMarkers();
+    mapContainer.closePopup();
     const newOffers = offers.slice(0, DATA_OFFERS_COUNT);
     createMarkers(newOffers);
-    inputForAddress.value = '';
-    inputForAddress.placeholder = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
-    inputForAddress.value = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
+    inputForAddress.value = coordinates;
     priceRoom.placeholder = 1000;
     priceRoom.min = 1000;
   });
@@ -161,10 +162,10 @@ export {
   formSubmit,
   form,
   priceRoom,
-  resetForm,
+  resetAllPage,
   roomTypeValues,
   deactivateForm,
   activateForm,
   inputForAddress,
-  clearAllForm
+  clearPageElements
 };
