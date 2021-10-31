@@ -1,12 +1,10 @@
-import { showErrorServerMessage } from './preventions.js';
-
-const DATA_OFFERS_COUNT = 10;
+import { showServerErrorMessage } from './preventions.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((offers) => onSuccess(offers))
-    .catch(() => showErrorServerMessage());
+    .catch(() => showServerErrorMessage());
 };
 
 
@@ -25,4 +23,4 @@ const sendData = (onSuccess, onFail, body) => {
     .catch(() => onFail());
 };
 
-export { getData, sendData, DATA_OFFERS_COUNT };
+export { getData, sendData};

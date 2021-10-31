@@ -1,4 +1,4 @@
-import { DATA_OFFERS_COUNT, sendData } from './server.js';
+import { sendData } from './server.js';
 import { showErrorMessage } from './preventions.js';
 import {tokyoCoordinates, setMarkers, createMarkers, mapContainer} from './map.js';
 
@@ -135,7 +135,7 @@ const clearPageElements = () => {
   inputForAddress.value = coordinates;
 };
 
-const formSubmit = (onSuccess) => {
+const handlerForSubmitForm = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendData(
@@ -149,7 +149,7 @@ const formSubmit = (onSuccess) => {
 const resetAllPage = (offers) => {
   resetButton.addEventListener('click', () => {
     clearPageElements();
-    const newOffers = offers.slice(0, DATA_OFFERS_COUNT);
+    const newOffers = offers.slice(0, 10);
     createMarkers(newOffers);
     inputForAddress.value = coordinates;
     priceRoom.placeholder = 1000;
@@ -159,7 +159,7 @@ const resetAllPage = (offers) => {
 
 export {
   initForm,
-  formSubmit,
+  handlerForSubmitForm,
   form,
   priceRoom,
   resetAllPage,

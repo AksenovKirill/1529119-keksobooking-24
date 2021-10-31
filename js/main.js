@@ -1,8 +1,8 @@
 import {initValidation } from './validation.js';
-import {initForm, activateForm, deactivateForm, formSubmit, clearPageElements, resetAllPage} from './form.js';
+import {initForm, activateForm, deactivateForm, handlerForSubmitForm, clearPageElements, resetAllPage} from './form.js';
 import {createMap, createMarkers} from './map.js';
 import {showSuccessMessage} from './preventions.js';
-import {DATA_OFFERS_COUNT, getData } from './server.js';
+import {getData} from './server.js';
 
 export let offers;
 
@@ -12,7 +12,7 @@ createMap(activateForm);
 
 getData ((data) => {
   offers = data;
-  const shortOffers = offers.slice(0, DATA_OFFERS_COUNT);
+  const shortOffers = offers.slice(0, 10);
   createMarkers(shortOffers);
   resetAllPage(offers);
 });
@@ -22,7 +22,7 @@ initForm();
 
 initValidation();
 
-formSubmit(() => {
+handlerForSubmitForm(() => {
   showSuccessMessage();
   clearPageElements();
   resetAllPage();

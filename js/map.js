@@ -24,7 +24,7 @@ const mainMarker = L.marker(
   },
 );
 
-const otherIcons = L.icon({
+const pinIcon = L.icon({
   iconUrl: 'img/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
@@ -59,7 +59,7 @@ const createMarkers = (offers) => {
         lng: offer.location.lng,
       },
       {
-        otherIcons,
+        pinIcon,
       },
     );
     otherMarkers.addTo(markerGroup)

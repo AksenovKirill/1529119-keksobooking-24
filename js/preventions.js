@@ -1,13 +1,13 @@
 const SHOW_TIME = 5000;
 
-const closeButton = (item) => {
+const handlerOnClickButton = (item) => {
   document.querySelector('.error__button')
     .addEventListener('click', () => {
       item.remove();
     });
 };
 
-const closeMessage = (item) => {
+const handlerForCloseMessage = (item) => {
   window.addEventListener('click', () => {
     item.remove();
   });
@@ -24,28 +24,29 @@ const errorTemplate = document.querySelector('#error')
   .querySelector('.error');
 
 const showErrorMessage = () => {
-  const errorMessage = errorTemplate.cloneNode(true);
-  errorMessage.querySelector('.error__message').style.height = '100px';
-  errorMessage.querySelector('.error__message').style.zIndex = 100;
-  errorMessage.querySelector('.error__message').style.position = 'absolute';
-  errorMessage.querySelector('.error__message').style.left = 0;
-  errorMessage.querySelector('.error__message').style.top = '160px';
-  errorMessage.querySelector('.error__message').style.right = 0;
-  errorMessage.querySelector('.error__message').style.padding = '30px';
-  errorMessage.querySelector('.error__message').style.fontSize = '30px';
-  errorMessage.querySelector('.error__message').style.textAlign = 'center';
-  errorMessage.querySelector('.error__message').style.fontWeight = 'bold';
-  errorMessage.querySelector('.error__message').style.backgroundColor = '#918686';
-  errorMessage.querySelector('.error__button').style.margin = '80px 0px 0px 0px';
-  errorMessage.querySelector('.error__button').style.width = '280px';
-  errorMessage.querySelector('.error__button').style.height = '100px';
-  errorMessage.querySelector('.error__button').style.backgroundColor = '#918686';
-  errorMessage.querySelector('.error__message').textContent = 'Ошибка в размещении обьявления';
+  const errorAlert = errorTemplate.cloneNode(true);
+  const errorMessage =  errorAlert.querySelector('.error__message');
+  errorMessage.style.height = '100px';
+  errorMessage.style.zIndex = 100;
+  errorMessage.style.position = 'absolute';
+  errorMessage.style.left = 0;
+  errorMessage.style.top = '160px';
+  errorMessage.style.right = 0;
+  errorMessage.style.padding = '30px';
+  errorMessage.style.fontSize = '30px';
+  errorMessage.style.textAlign = 'center';
+  errorMessage.style.fontWeight = 'bold';
+  errorMessage.style.backgroundColor = '#918686';
+  errorMessage.style.margin = '80px 0px 0px 0px';
+  errorMessage.style.width = '280px';
+  errorMessage.style.height = '100px';
+  errorMessage.style.backgroundColor = '#918686';
+  errorMessage.textContent = 'Ошибка в размещении обьявления';
 
-  document.body.append(errorMessage);
+  document.body.append(errorAlert);
 
-  closeButton(errorMessage);
-  closeMessage(errorMessage);
+  handlerOnClickButton(errorAlert);
+  handlerForCloseMessage(errorAlert);
 };
 
 const successTemplate = document.querySelector('#success')
@@ -53,28 +54,28 @@ const successTemplate = document.querySelector('#success')
   .querySelector('.success');
 
 const showSuccessMessage = () => {
-  const successMessage = successTemplate.cloneNode(true);
-  successMessage.querySelector('.success__message').style.zIndex = 100;
-  successMessage.querySelector('.success__message').style.position = 'absolute';
-  successMessage.querySelector('.success__message').style.left = 0;
-  successMessage.querySelector('.success__message').style.top = 0;
-  successMessage.querySelector('.success__message').style.right = 0;
-  successMessage.querySelector('.success__message').style.padding = '20px 5px';
-  successMessage.querySelector('.success__message').style.fontSize = '30px';
-  successMessage.querySelector('.success__message').style.textAlign = 'center';
-  successMessage.querySelector('.success__message').style.backgroundColor = '#918686';
-  successMessage.querySelector('.success__message').innerHTML = 'Ваше объявление<br>успешно размещено!';
+  const successAlert = successTemplate.cloneNode(true);
+  const successMessage = successAlert.querySelector('.success__message');
+  successMessage.style.zIndex = 100;
+  successMessage.style.position = 'absolute';
+  successMessage.style.left = 0;
+  successMessage.style.top = 0;
+  successMessage.style.padding = '20px 5px';
+  successMessage.style.fontSize = '30px';
+  successMessage.style.textAlign = 'center';
+  successMessage.style.backgroundColor = '#918686';
+  successMessage.innerHTML = 'Ваше объявление<br>успешно размещено!';
 
-  document.body.append(successMessage);
+  document.body.append(successAlert);
 
-  closeMessage(successMessage);
+  handlerForCloseMessage(successAlert);
 
   setTimeout(() => {
-    successMessage.remove();
+    successAlert.remove();
   }, SHOW_TIME);
 };
 
-const showErrorServerMessage = () => {
+const showServerErrorMessage = () => {
   const errorMessage = document.createElement('div');
   errorMessage.style.zIndex = 1000;
   errorMessage.style.position = 'absolute';
@@ -95,4 +96,4 @@ const showErrorServerMessage = () => {
     errorMessage.remove();
   }, SHOW_TIME);
 };
-export {showErrorServerMessage, showErrorMessage, showSuccessMessage};
+export {showServerErrorMessage, showErrorMessage, showSuccessMessage};
