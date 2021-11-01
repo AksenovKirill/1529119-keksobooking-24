@@ -51,7 +51,7 @@ const createMap = (mapLoad) => {
   markerGroup = L.layerGroup().addTo(mapContainer);
 };
 
-const createMarkers = (offers) => {
+const createMarker = (offers) => {
   offers.forEach((offer) => {
     const otherMarkers = L.marker(
       {
@@ -62,11 +62,12 @@ const createMarkers = (offers) => {
         pinIcon,
       },
     );
-    otherMarkers.addTo(markerGroup)
-      .bindPopup(((createOfferElement(offer))),
-        { keepInView: true },
-      );
-  });
+    return otherMarkers;
+  });};
+
+const createMarkers = (offers) => {
+  markerGroup.clearLayers();
+  offers.forEach(createMarker);
 };
 
 const setMarkers = () => {
@@ -74,4 +75,4 @@ const setMarkers = () => {
   mapContainer.setView(tokyoCoordinates, ZOOM_LEVEL);
 };
 
-export {createMap, createMarkers, setMarkers, tokyoCoordinates, mainMarker, mapContainer};
+export {createMap,createMarker, createMarkers, setMarkers, tokyoCoordinates, mapContainer};

@@ -121,12 +121,12 @@ const clearPageElements = () => {
   form.reset();
   setMarkers();
   mapContainer.closePopup();
-  featuresElements.forEach((element) => {
-    element.checked = false;
-  });
   roomNumberOptions[0].selected;
   resetCapacity();
   capacity.appendChild(capacityOptions[2]);
+  featuresElements.forEach((element) => {
+    element.checked = false;
+  });
   titleElement.style.border = 'none';
   priceRoom.style.border = 'none';
   priceRoom.min = '';
@@ -139,10 +139,11 @@ const handlerForSubmitForm = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendData(
-      () => onSuccess(),
-      () => showErrorMessage(),
+      onSuccess,
+      () => {
+        showErrorMessage();
+      },
       new FormData(evt.target));
-    clearPageElements();
   });
 };
 
@@ -151,13 +152,11 @@ const resetAllPage = (offers) => {
     clearPageElements();
     const newOffers = offers.slice(0, 10);
     createMarkers(newOffers);
-    inputForAddress.value = coordinates;
-    priceRoom.placeholder = 1000;
-    priceRoom.min = 1000;
   });
 };
 
 export {
+  mapFilter,
   initForm,
   handlerForSubmitForm,
   form,

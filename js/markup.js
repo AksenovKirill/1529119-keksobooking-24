@@ -11,7 +11,7 @@ const createOfferElement = ({author, offer}) => {
   offerElement.querySelector('.popup__text--address').textContent = offer.address;
   offerElement.querySelector('.popup__text--price').textContent = `${offer.price}${'₽/ночь'}`;
   offerElement.querySelector('.popup__type').textContent = offer.type;
-  offerElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guest} гостей`;
+  offerElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   offerElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   offerElement.querySelector('.popup__description').textContent = offer.description;
   offerElement.querySelector('.popup__avatar').src = author.avatar;
