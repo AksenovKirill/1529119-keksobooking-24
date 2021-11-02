@@ -1,4 +1,4 @@
-import { showServerErrorMessage, showErrorMessage} from './preventions.js';
+import { showServerErrorMessage, showErrorMessage, showSuccessMessage } from './preventions.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
@@ -7,7 +7,6 @@ const getData = (onSuccess) => {
     .catch(() => showServerErrorMessage());
 };
 
-
 const sendData = (onSuccess, onFail, body) => {
   fetch('https://24.javascript.pages.academy/keksobooking',
     {method: 'POST',
@@ -15,7 +14,7 @@ const sendData = (onSuccess, onFail, body) => {
   )
     .then((response) => {
       if (response.ok) {
-        onSuccess();
+        onSuccess(showSuccessMessage);
       } else {
         onFail(showErrorMessage);
       }

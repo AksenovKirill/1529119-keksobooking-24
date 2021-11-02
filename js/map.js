@@ -51,19 +51,18 @@ const createMap = (mapLoad) => {
   markerGroup = L.layerGroup().addTo(mapContainer);
 };
 
-const createMarker = (offers) => {
-  offers.forEach((offer) => {
-    const otherMarkers = L.marker(
-      {
-        lat: offer.location.lat,
-        lng: offer.location.lng,
-      },
-      {
-        pinIcon,
-      },
-    );
-    return otherMarkers;
-  });};
+const createMarker = (offer) => L.marker(
+  {
+    lat: offer.location.lat,
+    lng: offer.location.lng,
+  },
+  {
+    pinIcon,
+  },
+).addTo(markerGroup)
+  .bindPopup(((createOfferElement(offer))),
+    { keepInView: true },
+  );
 
 const createMarkers = (offers) => {
   markerGroup.clearLayers();

@@ -1,13 +1,13 @@
 const SHOW_TIME = 5000;
 
-const handlerOnClickButton = (item) => {
+const initButtonRemove = (item) => {
   document.querySelector('.error__button')
     .addEventListener('click', () => {
       item.remove();
     });
 };
 
-const handlerForCloseMessage = (item) => {
+const initCloseMessage = (item) => {
   window.addEventListener('click', () => {
     item.remove();
   });
@@ -27,26 +27,19 @@ const showErrorMessage = () => {
   const errorAlert = errorTemplate.cloneNode(true);
   const errorMessage =  errorAlert.querySelector('.error__message');
   errorMessage.style.height = '100px';
-  errorMessage.style.zIndex = 100;
-  errorMessage.style.position = 'absolute';
-  errorMessage.style.left = 0;
-  errorMessage.style.top = '160px';
-  errorMessage.style.right = 0;
+  errorMessage.style.zIndex = 1001;
   errorMessage.style.padding = '30px';
   errorMessage.style.fontSize = '30px';
   errorMessage.style.textAlign = 'center';
   errorMessage.style.fontWeight = 'bold';
   errorMessage.style.backgroundColor = '#918686';
-  errorMessage.style.margin = '80px 0px 0px 0px';
-  errorMessage.style.width = '280px';
-  errorMessage.style.height = '100px';
   errorMessage.style.backgroundColor = '#918686';
   errorMessage.textContent = 'Ошибка в размещении обьявления';
 
   document.body.append(errorAlert);
 
-  handlerOnClickButton(errorAlert);
-  handlerForCloseMessage(errorAlert);
+  initButtonRemove(errorAlert);
+  initCloseMessage(errorAlert);
 };
 
 const successTemplate = document.querySelector('#success')
@@ -56,10 +49,7 @@ const successTemplate = document.querySelector('#success')
 const showSuccessMessage = () => {
   const successAlert = successTemplate.cloneNode(true);
   const successMessage = successAlert.querySelector('.success__message');
-  successMessage.style.zIndex = 100;
-  successMessage.style.position = 'absolute';
-  successMessage.style.left = 0;
-  successMessage.style.top = 0;
+  successMessage.style.zIndex = 1000;
   successMessage.style.padding = '20px 5px';
   successMessage.style.fontSize = '30px';
   successMessage.style.textAlign = 'center';
@@ -68,7 +58,7 @@ const showSuccessMessage = () => {
 
   document.body.append(successAlert);
 
-  handlerForCloseMessage(successAlert);
+  initCloseMessage(successAlert);
 
   setTimeout(() => {
     successAlert.remove();
@@ -83,7 +73,7 @@ const showServerErrorMessage = () => {
   errorMessage.style.top = 0;
   errorMessage.style.right = 0;
   errorMessage.style.margin = '0px';
-  errorMessage.style.padding = '15px 10px';
+  errorMessage.style.padding = '20px 10px';
   errorMessage.style.fontSize = '50px';
   errorMessage.style.fontWeight = 'bold';
   errorMessage.style.textAlign = 'center';

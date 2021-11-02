@@ -1,6 +1,6 @@
 import { sendData } from './server.js';
-import { showErrorMessage } from './preventions.js';
 import {tokyoCoordinates, setMarkers, createMarkers, mapContainer} from './map.js';
+import {showErrorMessage, showSuccessMessage} from './preventions.js';
 
 const MAP_COLOR = 'grey';
 
@@ -27,6 +27,13 @@ const featuresElements = document.querySelectorAll('.features__checkbox');
 const prices = [0, 1000, 3000, 5000, 10000];
 const roomTypeValues = [];
 const coordinates = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
+
+let offers;
+
+const setOffers = (data) => {
+  offers = data;
+};
+
 const resetCapacity = () => {
   const capacitySelect = document.createElement('select');
   capacitySelect.classList.add('#capacity');
@@ -39,6 +46,25 @@ roomTypeOptions.map((option, index) => roomTypeValues.push({
   price: prices[index],
   value: option.value,
 }));
+
+const clearPageElements = () => {
+  mapFilter.reset();
+  form.reset();
+  setMarkers();
+  mapContainer.closePopup();
+  roomNumberOptions[0].selected;
+  resetCapacity();
+  capacity.appendChild(capacityOptions[2]);
+  featuresElements.forEach((element) => {
+    element.checked = false;
+  });
+  titleElement.style.border = 'none';
+  priceRoom.style.border = 'none';
+  priceRoom.min = '';
+  priceRoom.min = 1000;
+  priceRoom.placeholder = 1000;
+  inputForAddress.value = coordinates;
+};
 
 const initForm = () => {
   roomType.addEventListener('change', () => {
@@ -90,6 +116,23 @@ const initForm = () => {
   checkOut.addEventListener('change', () => {
     checkIn.value = checkOut.value;
   });
+
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      showSuccessMessage,
+      showErrorMessage,
+      new FormData(evt.target));
+    if(showSuccessMessage) {
+      clearPageElements();
+    }
+  });
+
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    clearPageElements();
+    createMarkers(offers.slice(0, 10));
+  });
 };
 
 const deactivateForm = () => {
@@ -108,7 +151,7 @@ const activateForm = () => {
   map.style.background = '';
   form.classList.remove('ad-form--disabled');
   formElements.forEach((fieldset) => {
-    fieldset.removeAttribute('state', 'disabled');
+    fieldset.removeAttribute('state');
   });
   mapFilter.classList.remove('ad-form--disabled');
   mapFilterElements.forEach((select) => {
@@ -116,52 +159,12 @@ const activateForm = () => {
   });
 };
 
-const clearPageElements = () => {
-  mapFilter.reset();
-  form.reset();
-  setMarkers();
-  mapContainer.closePopup();
-  roomNumberOptions[0].selected;
-  resetCapacity();
-  capacity.appendChild(capacityOptions[2]);
-  featuresElements.forEach((element) => {
-    element.checked = false;
-  });
-  titleElement.style.border = 'none';
-  priceRoom.style.border = 'none';
-  priceRoom.min = '';
-  priceRoom.placeholder = 1000;
-  priceRoom.min = 1000;
-  inputForAddress.value = coordinates;
-};
-
-const handlerForSubmitForm = (onSuccess) => {
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    sendData(
-      onSuccess,
-      () => {
-        showErrorMessage();
-      },
-      new FormData(evt.target));
-  });
-};
-
-const resetAllPage = (offers) => {
-  resetButton.addEventListener('click', () => {
-    clearPageElements();
-    const newOffers = offers.slice(0, 10);
-    createMarkers(newOffers);
-  });
-};
-
 export {
   mapFilter,
   initForm,
-  handlerForSubmitForm,
+  setOffers,
   form,
   priceRoom,
-  resetAllPage,
   roomTypeValues,
   deactivateForm,
   activateForm,

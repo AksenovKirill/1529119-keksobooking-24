@@ -1,24 +1,24 @@
 import { showPreview } from './avatar.js';
 import { filterOffers, initFilter } from './filter.js';
 import {initValidation } from './validation.js';
-import {initForm, activateForm, deactivateForm, handlerForSubmitForm, clearPageElements, resetAllPage} from './form.js';
+import {initForm, activateForm, deactivateForm, setOffers} from './form.js';
 import {createMap, createMarkers} from './map.js';
-import {showSuccessMessage} from './preventions.js';
-import {getData} from './server.js';
+import { getData } from './server.js';
 import { debounce } from './debounce.js';
-export let offers;
+
+let offers;
 
 deactivateForm();
 
 createMap(activateForm);
+initForm();
+
 getData ((data) => {
   offers = data;
-  const shortOffers = offers.slice(0, 10);
-  createMarkers(shortOffers);
-  resetAllPage(offers);
+  createMarkers(offers.slice(0, 10));
+  setOffers(offers);
 });
 
-initForm();
 initValidation();
 showPreview();
 
@@ -29,9 +29,3 @@ const debouncedFilter = debounce(() => {
 });
 
 initFilter(debouncedFilter);
-
-handlerForSubmitForm(() => {
-  showSuccessMessage();
-  clearPageElements();
-  resetAllPage();
-});
