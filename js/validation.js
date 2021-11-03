@@ -25,15 +25,16 @@ const initValidation = () => {
       titleElement.style.border = ALERT_BORDER_COLOR;
     }
     else {
-      titleElement.style.border = 'none';
+      titleElement.style.border = '';
     }
     for (const item of roomTypeValues) {
       if (item.price <= priceRoom.min) {
-        priceRoom.style.border = 'none';
+        priceRoom.style.border = '';
       }
       else {
         priceRoom.style.border = ALERT_BORDER_COLOR;
       }
     }
   });};
+
 export {initValidation};

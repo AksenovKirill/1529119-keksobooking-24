@@ -1,23 +1,38 @@
+import { sendData } from './server.js';
+import {tokyoCoordinates, setMarkers, createMarkers, mapContainer} from './map.js';
+import {showErrorMessage, showSuccessMessage} from './preventions.js';
+
 const MAP_COLOR = 'grey';
 
 const form = document.querySelector('.ad-form');
-const inputForAddress = form.querySelector('#address');
-const roomType = form.querySelector('#type');
-const priceRoom = form.querySelector('#price');
-const capacity = form.querySelector('#capacity');
-const roomNumber = form.querySelector('#room_number');
-const checkIn = form.querySelector('#timein');
-const checkOut = form.querySelector('#timeout');
-const capacityFragment = document.createDocumentFragment();
-const roomTypeOptions = Array.from(roomType.options);
-const roomNumberOptions = Array.from(roomNumber.options);
-const capacityOptions = Array.from(capacity.options);
 const formElements = form.querySelectorAll('fieldset');
 const map =  document.querySelector('.map__canvas');
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterElements = mapFilter.querySelectorAll('select');
+const inputForAddress = form.querySelector('#address');
+const capacity = form.querySelector('#capacity');
+const roomType = form.querySelector('#type');
+const checkIn = form.querySelector('#timein');
+const checkOut = form.querySelector('#timeout');
+const titleElement = form.querySelector('#title');
+const priceRoom = form.querySelector('#price');
+const roomNumber = form.querySelector('#room_number');
+const capacityFragment = document.createDocumentFragment();
+const roomTypeOptions = Array.from(roomType.options);
+const roomNumberOptions = Array.from(roomNumber.options);
+const capacityOptions = Array.from(capacity.options);
+const resetButton = document.querySelector('.ad-form__reset');
+const featuresElements = document.querySelectorAll('.features__checkbox');
+
 const prices = [0, 1000, 3000, 5000, 10000];
 const roomTypeValues = [];
+const coordinates = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
+
+let offers;
+
+const setOffers = (data) => {
+  offers = data;
+};
 
 const resetCapacity = () => {
   const capacitySelect = document.createElement('select');
@@ -31,6 +46,25 @@ roomTypeOptions.map((option, index) => roomTypeValues.push({
   price: prices[index],
   value: option.value,
 }));
+
+const clearPageElements = () => {
+  mapFilter.reset();
+  form.reset();
+  setMarkers();
+  mapContainer.closePopup();
+  roomNumberOptions[0].selected;
+  resetCapacity();
+  capacity.appendChild(capacityOptions[2]);
+  featuresElements.forEach((element) => {
+    element.checked = false;
+  });
+  titleElement.style.border = 'none';
+  priceRoom.style.border = 'none';
+  priceRoom.min = '';
+  priceRoom.min = 1000;
+  priceRoom.placeholder = 1000;
+  inputForAddress.value = coordinates;
+};
 
 const initForm = () => {
   roomType.addEventListener('change', () => {
@@ -82,6 +116,23 @@ const initForm = () => {
   checkOut.addEventListener('change', () => {
     checkIn.value = checkOut.value;
   });
+
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      showSuccessMessage,
+      showErrorMessage,
+      new FormData(evt.target));
+    if(showSuccessMessage) {
+      clearPageElements();
+    }
+  });
+
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    clearPageElements();
+    createMarkers(offers.slice(0, 10));
+  });
 };
 
 const deactivateForm = () => {
@@ -100,7 +151,7 @@ const activateForm = () => {
   map.style.background = '';
   form.classList.remove('ad-form--disabled');
   formElements.forEach((fieldset) => {
-    fieldset.removeAttribute('state', 'disabled');
+    fieldset.removeAttribute('state');
   });
   mapFilter.classList.remove('ad-form--disabled');
   mapFilterElements.forEach((select) => {
@@ -108,4 +159,15 @@ const activateForm = () => {
   });
 };
 
-export {initForm, form, priceRoom, roomTypeValues, deactivateForm, activateForm, inputForAddress};
+export {
+  mapFilter,
+  initForm,
+  setOffers,
+  form,
+  priceRoom,
+  roomTypeValues,
+  deactivateForm,
+  activateForm,
+  inputForAddress,
+  clearPageElements
+};

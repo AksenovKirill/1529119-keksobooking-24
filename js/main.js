@@ -1,14 +1,31 @@
+import { showPreview } from './avatar.js';
+import { filterOffers, initFilter } from './filter.js';
 import {initValidation } from './validation.js';
-import {initForm, activateForm, deactivateForm} from './form.js';
-import { createMap} from './map.js';
-import {createOffer} from './data.js';
+import {initForm, activateForm, deactivateForm, setOffers} from './form.js';
+import {createMap, createMarkers} from './map.js';
+import { getData } from './server.js';
+import { debounce } from './debounce.js';
 
-const OFFERS_AMOUNT = 10;
-const offers = Array.from({length: OFFERS_AMOUNT}, createOffer);
+let offers;
 
 deactivateForm();
 
-createMap(activateForm, offers);
-
+createMap(activateForm);
 initForm();
+
+getData ((data) => {
+  offers = data;
+  createMarkers(offers.slice(0, 10));
+  setOffers(offers);
+});
+
 initValidation();
+showPreview();
+
+const debouncedFilter = debounce(() => {
+  const filteredOffers = filterOffers(offers);
+  const newFilteredOffers = filteredOffers.slice(0, 10);
+  createMarkers(newFilteredOffers);
+});
+
+initFilter(debouncedFilter);
