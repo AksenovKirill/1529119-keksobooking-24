@@ -1,4 +1,4 @@
-import { form, priceRoom, roomTypeValues } from './form.js';
+import { form, priceRoom, roomTypeValues, roomType } from './form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -19,6 +19,15 @@ const initValidation = () => {
     }
     titleElement.reportValidity();
   });
+
+  priceRoom.addEventListener('click', () => {
+    for (const item of roomTypeValues) {
+      if(roomType.value === item.value) {
+        priceRoom.min = item.price;
+        priceRoom.placeholder = item.price;
+        priceRoom.reportValidity();
+      }
+    }});
 
   submitButton.addEventListener('click', () => {
     if (titleElement.value.length < MIN_TITLE_LENGTH || titleElement.value.length > MAX_TITLE_LENGTH) {

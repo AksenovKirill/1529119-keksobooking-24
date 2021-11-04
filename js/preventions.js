@@ -1,4 +1,4 @@
-const SHOW_TIME = 5000;
+const ERROR_MESSAGE_HIDE_DELAY = 5000;
 
 const initButtonRemove = (item) => {
   document.querySelector('.error__button')
@@ -62,7 +62,7 @@ const showSuccessMessage = () => {
 
   setTimeout(() => {
     successAlert.remove();
-  }, SHOW_TIME);
+  }, ERROR_MESSAGE_HIDE_DELAY);
 };
 
 const showServerErrorMessage = () => {
@@ -84,6 +84,6 @@ const showServerErrorMessage = () => {
   document.body.append(errorMessage);
   setTimeout(() => {
     errorMessage.remove();
-  }, SHOW_TIME);
+  }, ERROR_MESSAGE_HIDE_DELAY);
 };
 export {showServerErrorMessage, showErrorMessage, showSuccessMessage};

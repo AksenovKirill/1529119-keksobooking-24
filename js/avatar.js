@@ -7,8 +7,7 @@ const image = form.querySelector('#images');
 const previewAvatar = document.querySelector('.ad-form-header__preview img');
 const previewImage = document.querySelector('.ad-form__photo');
 
-
-const showPreview = () => {
+const initPreviewImage = () => {
   avatar.addEventListener('change', () => {
     const fileAvatar = avatar.files[0];
     const fileNameAvatar = fileAvatar.name.toLowerCase();
@@ -32,5 +31,5 @@ const showPreview = () => {
     }
   });};
 
-export {showPreview};
+export {initPreviewImage, previewAvatar, previewImage};
 
