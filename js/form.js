@@ -46,7 +46,7 @@ roomTypeOptions.map((option, index) => roomTypeValues.push({
   price: prices[index],
   value: option.value,
 }));
-console.log(roomTypeValues);
+
 const clearPageElements = () => {
   mapFilter.reset();
   form.reset();

@@ -1,8 +1,16 @@
-import { form, priceRoom, roomTypeValues, roomType } from './form.js';
+import { form, priceRoom, roomType } from './form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-const ALERT_BORDER_COLOR = '4px solid red';
+const MAX_PRICE = 1000000;
+
+const MIN_PRICE_OF_TYPE = {
+  bungalow: '0',
+  flat: '1000',
+  hotel: '3000',
+  house: '5000',
+  palace: '10000',
+};
 
 const titleElement = form.querySelector('#title');
 const submitButton = document.querySelector('.ad-form__submit');
@@ -20,30 +28,27 @@ const initValidation = () => {
     titleElement.reportValidity();
   });
 
-  priceRoom.addEventListener('click', () => {
-    for (const item of roomTypeValues) {
-      if(roomType.value === item.value) {
-        priceRoom.min = item.price;
-        priceRoom.placeholder = item.price;
-        priceRoom.reportValidity();
-      }
-    }});
-
   submitButton.addEventListener('click', () => {
     if (titleElement.value.length < MIN_TITLE_LENGTH || titleElement.value.length > MAX_TITLE_LENGTH) {
-      titleElement.style.border = ALERT_BORDER_COLOR;
+      titleElement.style.border = 'red';
     }
     else {
       titleElement.style.border = '';
     }
-    for (const item of roomTypeValues) {
-      if (item.price <= priceRoom.min) {
-        priceRoom.style.border = '';
-      }
-      else {
-        priceRoom.style.border = ALERT_BORDER_COLOR;
-      }
+
+    const valuePrice = priceRoom.value;
+
+    if (valuePrice < MIN_PRICE_OF_TYPE[roomType.value]) {
+      priceRoom.style.borderColor = 'red';
+    } else if (valuePrice > MAX_PRICE) {
+      priceRoom.style.borderColor = 'red';
+      priceRoom.setCustomValidity(`Максимальная цена за ночь ${MAX_PRICE}.`);
+    } else {
+      priceRoom.style.borderColor = 'white';
+      priceRoom.setCustomValidity('');
     }
+    priceRoom.reportValidity();
   });};
+
 
 export {initValidation};

@@ -12,16 +12,14 @@ deactivateForm();
 
 createMap(activateForm);
 
-initForm();
-
 getData ((data) => {
   offers = data;
   createMarkers(offers.slice(0, 10));
   setOffers(offers);
 });
 
+initForm();
 initValidation();
-
 initPreviewImage();
 
 const debouncedFilter = debounce(() => {
