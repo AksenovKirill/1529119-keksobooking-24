@@ -1,6 +1,7 @@
 import { sendData } from './server.js';
 import {tokyoCoordinates, setMarkers, createMarkers, mapContainer} from './map.js';
 import {showErrorMessage, showSuccessMessage} from './preventions.js';
+import { previewAvatar, previewImage } from './avatar.js';
 
 const MAP_COLOR = 'grey';
 
@@ -26,7 +27,6 @@ const featuresElements = document.querySelectorAll('.features__checkbox');
 
 const prices = [0, 1000, 3000, 5000, 10000];
 const roomTypeValues = [];
-const coordinates = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
 
 let offers;
 
@@ -58,32 +58,30 @@ const clearPageElements = () => {
   featuresElements.forEach((element) => {
     element.checked = false;
   });
+  previewAvatar.src = 'img/muffin-grey.svg';
+  previewImage.innerHTML = '';
   titleElement.style.border = 'none';
   priceRoom.style.border = 'none';
   priceRoom.min = '';
   priceRoom.min = 1000;
   priceRoom.placeholder = 1000;
-  inputForAddress.value = coordinates;
+  inputForAddress.value = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
 };
 
 const initForm = () => {
+  window.addEventListener('load', () => {
+    resetCapacity();
+    capacity.appendChild(capacityOptions[2]);
+  });
+
   roomType.addEventListener('change', () => {
     for (const item of roomTypeValues) {
       if(roomType.value === item.value) {
-        priceRoom.value = '';
         priceRoom.min = item.price;
         priceRoom.placeholder = item.price;
         priceRoom.reportValidity();
       }
     }});
-
-  window.addEventListener('load', () => {
-    resetCapacity();
-    capacity.appendChild(capacityOptions[2]);
-    priceRoom.value = '';
-    priceRoom.min = 1000;
-  });
-
   priceRoom.addEventListener('keyup', function(){
     this.value = this.value.replace(/[^\d]/g, '');
   });
@@ -123,9 +121,6 @@ const initForm = () => {
       showSuccessMessage,
       showErrorMessage,
       new FormData(evt.target));
-    if(showSuccessMessage) {
-      clearPageElements();
-    }
   });
 
   resetButton.addEventListener('click', (evt) => {
@@ -165,6 +160,7 @@ export {
   setOffers,
   form,
   priceRoom,
+  roomType,
   roomTypeValues,
   deactivateForm,
   activateForm,

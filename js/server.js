@@ -1,4 +1,5 @@
-import { showServerErrorMessage, showErrorMessage, showSuccessMessage } from './preventions.js';
+import {clearPageElements} from './form.js';
+import {showServerErrorMessage, showErrorMessage, showSuccessMessage} from './preventions.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
@@ -15,6 +16,7 @@ const sendData = (onSuccess, onFail, body) => {
     .then((response) => {
       if (response.ok) {
         onSuccess(showSuccessMessage);
+        clearPageElements();
       } else {
         onFail(showErrorMessage);
       }
