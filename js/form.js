@@ -152,6 +152,8 @@ const activateForm = () => {
   formElements.forEach((fieldset) => {
     fieldset.disabled = false;
   });
+};
+const activateFilters = () => {
   mapFilter.classList.remove('ad-form--disabled');
   mapFilterElements.forEach((select) => {
     select.disabled = false;
@@ -170,5 +172,6 @@ export {
   activateForm,
   inputForAddress,
   clearPageElements,
+  activateFilters,
   SHORT_OFFERS
 };
