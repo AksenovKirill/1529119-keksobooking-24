@@ -1,5 +1,5 @@
-const allFilters = document.querySelectorAll('.map__filter');
-const allCheckboxFilters = document.querySelectorAll('.map__checkbox');
+import {mapFilter} from './form.js';
+
 const rooms = document.querySelector('#housing-rooms');
 const guests = document.querySelector('#housing-guests');
 const type = document.querySelector('#housing-type');
@@ -56,12 +56,7 @@ const filterOffers = (offers) => offers.filter(({ offer }) => {
 });
 
 const initFilter = (onFilterChange) => {
-  allFilters.forEach((elem) => {
-    elem.addEventListener('change', onFilterChange);
-  });
-  allCheckboxFilters.forEach((elem) => {
-    elem.addEventListener('change', onFilterChange);
-  });
+  mapFilter.addEventListener('change', onFilterChange);
 };
 
 export {initFilter, filterOffers};

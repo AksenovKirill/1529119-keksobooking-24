@@ -1,5 +1,13 @@
-const PHOTO_WIDTH = 80;
-const PHOTO_HEIGHT = 85;
+const PHOTO_WIDTH = 45;
+const PHOTO_HEIGHT = 40;
+
+const roomTypesAdapter = {
+  palace: 'дворец',
+  flat: 'квартира',
+  house: 'дом',
+  bungalow: 'бунгало',
+  hotel: 'отель',
+};
 
 const offerTemplate = document.querySelector('#card')
   .content
@@ -10,7 +18,7 @@ const createOfferElement = ({author, offer}) => {
   offerElement.querySelector('.popup__title').textContent = offer.title;
   offerElement.querySelector('.popup__text--address').textContent = offer.address;
   offerElement.querySelector('.popup__text--price').textContent = `${offer.price}${'₽/ночь'}`;
-  offerElement.querySelector('.popup__type').textContent = offer.type;
+  offerElement.querySelector('.popup__type').textContent = roomTypesAdapter[offer.type];
   offerElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   offerElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   offerElement.querySelector('.popup__description').textContent = offer.description;
@@ -26,6 +34,9 @@ const createOfferElement = ({author, offer}) => {
       featuresList.appendChild(featureElement);
     });
   }
+  else {
+    offerElement.removeChild(featuresList);
+  }
 
   const featuresPhotos = offerElement.querySelector('.popup__photos');
   featuresPhotos.innerHTML = '';
@@ -38,6 +49,9 @@ const createOfferElement = ({author, offer}) => {
       photoElement.height = PHOTO_HEIGHT;
       featuresPhotos.appendChild(photoElement);
     });
+  }
+  else {
+    offerElement.removeChild(featuresPhotos);
   }
   return offerElement;
 };

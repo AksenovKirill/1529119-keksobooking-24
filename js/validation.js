@@ -28,27 +28,33 @@ const initValidation = () => {
     titleElement.reportValidity();
   });
 
+  priceRoom.addEventListener('input', () => {
+    const valuePrice = Number(priceRoom.value);
+    if (valuePrice < MIN_PRICE_OF_TYPE[roomType.value]) {
+      priceRoom.setCustomValidity(`Минимальная цена за ночь ${MIN_PRICE_OF_TYPE[roomType.value]}.`);
+    } else if (valuePrice > MAX_PRICE) {
+      priceRoom.setCustomValidity(`Максимальная цена за ночь ${MAX_PRICE}.`);
+    }
+    else {
+      priceRoom.setCustomValidity('');
+    }
+    priceRoom.reportValidity();
+  });
+
   submitButton.addEventListener('click', () => {
     if (titleElement.value.length < MIN_TITLE_LENGTH || titleElement.value.length > MAX_TITLE_LENGTH) {
-      titleElement.style.border = 'red';
+      titleElement.style.border = '1px solid red';
     }
     else {
       titleElement.style.border = '';
     }
-
-    const valuePrice = priceRoom.value;
-
-    if (valuePrice < MIN_PRICE_OF_TYPE[roomType.value]) {
-      priceRoom.style.borderColor = 'red';
-    } else if (valuePrice > MAX_PRICE) {
-      priceRoom.style.borderColor = 'red';
-      priceRoom.setCustomValidity(`Максимальная цена за ночь ${MAX_PRICE}.`);
-    } else {
-      priceRoom.style.borderColor = 'white';
-      priceRoom.setCustomValidity('');
+    if (Number(priceRoom.value) < MIN_PRICE_OF_TYPE[roomType.value] || Number(priceRoom.value) > MAX_PRICE) {
+      priceRoom.style.border = '2px solid red';
     }
-    priceRoom.reportValidity();
-  });};
-
+    else {
+      priceRoom.style.border = '';
+    }
+  });
+};
 
 export {initValidation};

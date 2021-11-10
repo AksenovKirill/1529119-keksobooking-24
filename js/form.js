@@ -4,6 +4,7 @@ import {showErrorMessage, showSuccessMessage} from './preventions.js';
 import { previewAvatar, previewImage } from './avatar.js';
 
 const MAP_COLOR = 'grey';
+const SHORT_OFFERS = 10;
 
 const form = document.querySelector('.ad-form');
 const formElements = form.querySelectorAll('fieldset');
@@ -65,7 +66,7 @@ const clearPageElements = () => {
   priceRoom.min = '';
   priceRoom.min = 1000;
   priceRoom.placeholder = 1000;
-  inputForAddress.value = `Lat: ${tokyoCoordinates.lat}; Lng: ${tokyoCoordinates.lng}`;
+  inputForAddress.value = `${tokyoCoordinates.lat}, ${tokyoCoordinates.lng}`;
 };
 
 const initForm = () => {
@@ -77,13 +78,16 @@ const initForm = () => {
   roomType.addEventListener('change', () => {
     for (const item of roomTypeValues) {
       if(roomType.value === item.value) {
+        priceRoom.value = '';
         priceRoom.min = item.price;
         priceRoom.placeholder = item.price;
         priceRoom.reportValidity();
       }
-    }});
-  priceRoom.addEventListener('keyup', function(){
-    this.value = this.value.replace(/[^\d]/g, '');
+    }
+  });
+
+  priceRoom.addEventListener('keyup', () => {
+    priceRoom.value = priceRoom.value.replace(/[^\d]/g, '');
   });
 
   roomNumber.addEventListener('change', () => {
@@ -126,7 +130,7 @@ const initForm = () => {
   resetButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     clearPageElements();
-    createMarkers(offers.slice(0, 10));
+    createMarkers(offers.slice(0, SHORT_OFFERS));
   });
 };
 
@@ -134,11 +138,11 @@ const deactivateForm = () => {
   map.style.background = MAP_COLOR;
   form.classList.add('ad-form--disabled');
   formElements.forEach((fieldset) => {
-    fieldset.setAttribute('state', 'disabled');
+    fieldset.disabled = true;
   });
   mapFilter.classList.add('ad-form--disabled');
   mapFilterElements.forEach((select) => {
-    select.setAttribute('state', 'disabled');
+    select.disabled = true;
   });
 };
 
@@ -146,11 +150,11 @@ const activateForm = () => {
   map.style.background = '';
   form.classList.remove('ad-form--disabled');
   formElements.forEach((fieldset) => {
-    fieldset.removeAttribute('state');
+    fieldset.disabled = false;
   });
   mapFilter.classList.remove('ad-form--disabled');
   mapFilterElements.forEach((select) => {
-    select.removeAttribute('state', 'disabled');
+    select.disabled = false;
   });
 };
 
@@ -165,5 +169,6 @@ export {
   deactivateForm,
   activateForm,
   inputForAddress,
-  clearPageElements
+  clearPageElements,
+  SHORT_OFFERS
 };

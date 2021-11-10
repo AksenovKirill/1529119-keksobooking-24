@@ -22,7 +22,6 @@ const initPreviewImage = () => {
     const matches = FILE_TYPES.some((type) => fileNameImage.endsWith(type));
     if(matches) {
       const boxForLoading = document.createElement('img');
-      boxForLoading.setAttribute('src', 'src');
       boxForLoading.style.width = '70px';
       boxForLoading.style.height = '70px';
       boxForLoading.alt = 'Фото жилья';
