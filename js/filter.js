@@ -1,4 +1,4 @@
-import {mapFilter} from './form.js';
+import {mapFilter, mapFilterElements} from './form.js';
 
 const rooms = document.querySelector('#housing-rooms');
 const guests = document.querySelector('#housing-guests');
@@ -15,6 +15,13 @@ const priceRanges = {
   low: [0, 10000],
   middle: [10000, 50000],
   high: [50000, 1000000],
+};
+
+const activateFilters = () => {
+  mapFilter.classList.remove('ad-form--disabled');
+  mapFilterElements.forEach((select) => {
+    select.disabled = false;
+  });
 };
 
 const filterOffers = (offers) => offers.filter(({ offer }) => {
@@ -59,4 +66,4 @@ const initFilter = (onFilterChange) => {
   mapFilter.addEventListener('change', onFilterChange);
 };
 
-export {initFilter, filterOffers};
+export {activateFilters, initFilter, filterOffers};

@@ -19,7 +19,6 @@ const checkOut = form.querySelector('#timeout');
 const titleElement = form.querySelector('#title');
 const priceRoom = form.querySelector('#price');
 const roomNumber = form.querySelector('#room_number');
-const capacityFragment = document.createDocumentFragment();
 const roomTypeOptions = Array.from(roomType.options);
 const roomNumberOptions = Array.from(roomNumber.options);
 const capacityOptions = Array.from(capacity.options);
@@ -35,14 +34,6 @@ const setOffers = (data) => {
   offers = data;
 };
 
-const resetCapacity = () => {
-  const capacitySelect = document.createElement('select');
-  capacitySelect.classList.add('#capacity');
-  capacitySelect.setAttribute('name', 'capacity');
-  capacity.innerHTML = '';
-  capacity.appendChild(capacityFragment);
-};
-
 roomTypeOptions.map((option, index) => roomTypeValues.push({
   price: prices[index],
   value: option.value,
@@ -54,7 +45,7 @@ const clearPageElements = () => {
   setMarkers();
   mapContainer.closePopup();
   roomNumberOptions[0].selected;
-  resetCapacity();
+  capacity.innerHTML = '';
   capacity.appendChild(capacityOptions[2]);
   featuresElements.forEach((element) => {
     element.checked = false;
@@ -71,7 +62,7 @@ const clearPageElements = () => {
 
 const initForm = () => {
   window.addEventListener('load', () => {
-    resetCapacity();
+    capacity.innerHTML = '';
     capacity.appendChild(capacityOptions[2]);
   });
 
@@ -92,21 +83,21 @@ const initForm = () => {
 
   roomNumber.addEventListener('change', () => {
     if (roomNumberOptions[0].selected) {
-      resetCapacity();
+      capacity.innerHTML = '';
       capacity.appendChild(capacityOptions[2]);
     }
     else if (roomNumberOptions[1].selected) {
-      resetCapacity();
+      capacity.innerHTML = '';
       capacity.append(capacityOptions[1], capacityOptions[2]);
       capacityOptions[1].selected = true;
     }
     else if (roomNumberOptions[2].selected) {
-      resetCapacity();
+      capacity.innerHTML = '';
       capacity.append(capacityOptions[1],capacityOptions[2], capacityOptions[0]);
       capacityOptions[0].selected = true;
     }
     else if (roomNumberOptions[3].selected) {
-      resetCapacity();
+      capacity.innerHTML = '';
       capacity.append(capacityOptions[3]);
     }
   });
@@ -153,15 +144,10 @@ const activateForm = () => {
     fieldset.disabled = false;
   });
 };
-const activateFilters = () => {
-  mapFilter.classList.remove('ad-form--disabled');
-  mapFilterElements.forEach((select) => {
-    select.disabled = false;
-  });
-};
 
 export {
   mapFilter,
+  mapFilterElements,
   initForm,
   setOffers,
   form,
@@ -172,6 +158,5 @@ export {
   activateForm,
   inputForAddress,
   clearPageElements,
-  activateFilters,
   SHORT_OFFERS
 };
