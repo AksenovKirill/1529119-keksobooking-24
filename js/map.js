@@ -1,4 +1,4 @@
-import { inputForAddress } from './form.js';
+import {inputForAddress} from './form.js';
 import {createOfferElement} from './markUp.js';
 
 const ZOOM_LEVEL = 12;

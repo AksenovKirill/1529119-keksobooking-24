@@ -1,4 +1,4 @@
-import { isEscapeKey } from './utils.js';
+import {isEscapeKey} from './utils.js';
 
 const successAlert = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
 const errorAlert = document.querySelector('#error').content.querySelector('.error').cloneNode(true);

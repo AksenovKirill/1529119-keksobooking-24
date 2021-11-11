@@ -1,7 +1,7 @@
-import { sendData } from './server.js';
+import {sendData} from './server.js';
 import {tokyoCoordinates, setMarkers, createMarkers, mapContainer} from './map.js';
 import {showErrorMessage, showSuccessMessage} from './preventions.js';
-import { previewAvatar, previewImage } from './avatar.js';
+import {previewAvatar, previewImage} from './avatar.js';
 
 const MAP_COLOR = 'grey';
 const SHORT_OFFERS = 10;

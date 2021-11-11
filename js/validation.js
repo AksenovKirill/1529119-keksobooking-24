@@ -1,4 +1,4 @@
-import { form, priceRoom, roomType } from './form.js';
+import {form, priceRoom, roomType} from './form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;

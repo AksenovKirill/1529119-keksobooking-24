@@ -1,11 +1,10 @@
 import {initPreviewImage} from './avatar.js';
-import {filterOffers, initFilter} from './filter.js';
+import {activateFilters, filterOffers, initFilter} from './filter.js';
 import {initValidation} from './validation.js';
-import { activateFilters } from './filter.js';
 import {initForm, activateForm, deactivateForm, setOffers, SHORT_OFFERS} from './form.js';
 import {createMap, createMarkers} from './map.js';
 import {getData} from './server.js';
-import { debounce } from './utils.js';
+import {debounce} from './utils.js';
 
 let offers;
 
