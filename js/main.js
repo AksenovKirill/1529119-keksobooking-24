@@ -10,12 +10,14 @@ let offers;
 
 deactivateForm();
 
-createMap(activateForm, getData ((data) => {
+createMap(activateForm, getData);
+
+getData ((data) => {
   offers = data;
-  createMarkers(offers.slice(0, SHORT_OFFERS));
   setOffers(offers);
+  createMarkers(offers.slice(0, SHORT_OFFERS));
   activateFilters();
-}));
+});
 
 const debouncedFilter = debounce(() => {
   const filteredOffers = filterOffers(offers);
